@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     [Header("Button")]
-    public GameObject buttonKick;
+    public Button buttonKick;
 
     public void Awake()
     {
@@ -23,17 +24,24 @@ public class UIManager : MonoBehaviour
 
         AssignListener();
 
-        buttonKick.SetActive(false);
+        buttonKick.gameObject.SetActive(false);
+
+        buttonKick.onClick.AddListener(onClick_ButtonKick);
     }
 
     public void AssignListener()
     {
-        EventManager.instance.onPlayerCollisionBall.AddListener(DisplayButtonKick);
+        EventManager.instance.onCollision_PlayerAndBall.AddListener(DisplayButtonKick);
     }
 
-    public void DisplayButtonKick(bool isActive, GameObject hitBall)
+    public void DisplayButtonKick(bool isActive, Ball hitBall)
     {
-        buttonKick.SetActive(isActive);
+        buttonKick.gameObject.SetActive(isActive);
+    }
+
+    public void onClick_ButtonKick()
+    {
+        EventManager.instance.onClicked_ButtonKick.Invoke();
     }
 
 }

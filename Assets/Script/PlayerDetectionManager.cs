@@ -24,16 +24,12 @@ public class PlayerDetectionManager : MonoBehaviour
 
         if (ballColliders.Length > 0)
         {
-            foreach (Collider collider in ballColliders)
-            {
-                print(collider.name);
-            }
-
-            EventManager.instance.onPlayerCollisionBall.Invoke(true, ballColliders[0].gameObject);
+            Ball ball = ballColliders[0].gameObject.GetComponent<Ball>();
+            EventManager.instance.onCollision_PlayerAndBall.Invoke(true, ball);
         }
         else
         {
-            EventManager.instance.onPlayerCollisionBall.Invoke(false, null);
+            EventManager.instance.onCollision_PlayerAndBall.Invoke(false, null);
         }
 
 

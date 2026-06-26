@@ -7,8 +7,9 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager instance;
 
-    [Header("Evnets")]
-    public UnityEvent<bool,GameObject> onPlayerCollisionBall;
+    [Header("Events")]
+    public UnityEvent<bool,Ball> onCollision_PlayerAndBall;
+    public UnityEvent onClicked_ButtonKick;
 
     public void Awake()
     {
