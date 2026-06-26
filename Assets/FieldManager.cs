@@ -84,12 +84,11 @@ public class FieldManager : MonoBehaviour
 
     private async void OnBallCompletePath()
     {
+        Vector3 hitPosition = ballPlayerJustShoot.transform.position;
         ballsOnField.Remove(ballPlayerJustShoot);
         Destroy(ballPlayerJustShoot.gameObject);
 
-        await Task.Delay(2000);
-
-        EventManager.instance.onBallHitGoal.Invoke();
+        EventManager.instance.onBallHitGoal.Invoke(hitPosition);
     }
 
     public GameObject GetNearestGoalFrameDueToBall(Ball kickedBall)

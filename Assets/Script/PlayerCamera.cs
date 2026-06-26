@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
@@ -25,7 +26,7 @@ public class PlayerCamera : MonoBehaviour
             Destroy(gameObject);
         }
 
-        EventManager.instance.onBallHitGoal.AddListener(SetToPlayerFollowCamera);
+        EventManager.instance.onBallHitGoal.AddListener(SetToPlayerFollowCameraAfterHitGoal);
         EventManager.instance.onClicked_ButtonKick.AddListener(SetToBallFollowCamera);
         EventManager.instance.onClicked_ButtonAutoKick.AddListener(SetToBallFollowCamera);
         RearragePriority();
@@ -43,6 +44,13 @@ public class PlayerCamera : MonoBehaviour
         playerFollowCamera.Priority = 1000;
     }
 
+
+    public async void SetToPlayerFollowCameraAfterHitGoal(Vector3 hitPosition)
+    {
+        await Task.Delay(2000);
+
+        SetToPlayerFollowCamera();
+    }
     public void RearragePriority()
     {
         ballFollowCamera.Priority = 0;
