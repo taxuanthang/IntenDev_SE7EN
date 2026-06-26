@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class FieldManager : MonoBehaviour
@@ -8,10 +9,14 @@ public class FieldManager : MonoBehaviour
     public List<Ball> ballsOnField;
     public GameObject[] goalFrameOnField;
 
-    public Ball ballPlayerTouching;
-    public Ball ballPlayerJustShoot;
+    [HideInInspector] public Ball ballPlayerTouching;
+    [HideInInspector]  public Ball ballPlayerJustShoot;
 
     public PlayerManager player;
+
+    [Header("Settings")]
+    public Vector3 deltaGoalHeight = new Vector3(0,1f,0f);
+    public Vector2 randomRange = new Vector2(4.6f, 5f);
 
     public void Awake()
     {
@@ -46,12 +51,14 @@ public class FieldManager : MonoBehaviour
             }
         }
 
-        ShootBallToTheNearestGoal(farthestBall);
+        if (farthestBall != null) ShootBallToTheNearestGoal(farthestBall);
 
     }
 
     public void ShootBallToTheNearestGoal(Ball ball)
     {
+        PlayerCamera.instance.SetBallFollowed(ball.transform);
+
         GameObject nearestGoalDueToBall = GetNearestGoalFrameDueToBall(ball);
 
         ballPlayerJustShoot = ball;
@@ -59,12 +66,12 @@ public class FieldManager : MonoBehaviour
         // Calculate Path
         Vector3 midPos = (ball.transform.position + nearestGoalDueToBall.transform.position) / 2;
         midPos = midPos / 1.1f;
-        midPos.y = Random.RandomRange(4.6f, 5f);
+        midPos.y = Random.RandomRange(randomRange.x, randomRange.y);
         Vector3[] path =
             {
                 ball.transform.position,
                 midPos,
-                nearestGoalDueToBall.transform.position
+                nearestGoalDueToBall.transform.position + deltaGoalHeight
             };
 
         // ShootBall
@@ -75,10 +82,14 @@ public class FieldManager : MonoBehaviour
         ).OnComplete(OnBallCompletePath);
     }
 
-    private void OnBallCompletePath()
+    private async void OnBallCompletePath()
     {
         ballsOnField.Remove(ballPlayerJustShoot);
         Destroy(ballPlayerJustShoot.gameObject);
+
+        await Task.Delay(2000);
+
+        EventManager.instance.onBallHitGoal.Invoke();
     }
 
     public GameObject GetNearestGoalFrameDueToBall(Ball kickedBall)

@@ -29,8 +29,8 @@ public class PlayerLocomotionManager : MonoBehaviour
         moveAmount = Mathf.Clamp01(new Vector2(horizontal_Input,vertical_Input).magnitude);
 
 
-        moveDirection = PlayerCamera.instance.transform.up * verticalInput;
-        moveDirection = moveDirection + PlayerCamera.instance.transform.right * horizontalInput;
+        moveDirection = PlayerCamera.instance.playerFollowCamera.transform.up * verticalInput;
+        moveDirection = moveDirection + PlayerCamera.instance.playerFollowCamera.transform.right * horizontalInput;
 
         moveDirection.y = 0;
         moveDirection.Normalize();

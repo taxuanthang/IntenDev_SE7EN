@@ -11,6 +11,7 @@ public class EventManager : MonoBehaviour
     public UnityEvent<bool,Ball> onCollision_PlayerAndBall;
     public UnityEvent onClicked_ButtonKick;
     public UnityEvent onClicked_ButtonAutoKick;
+    public UnityEvent onBallHitGoal;
 
     public void Awake()
     {
