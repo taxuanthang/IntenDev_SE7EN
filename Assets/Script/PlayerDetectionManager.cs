@@ -29,7 +29,11 @@ public class PlayerDetectionManager : MonoBehaviour
                 print(collider.name);
             }
 
-
+            EventManager.instance.onPlayerCollisionBall.Invoke(true, ballColliders[0].gameObject);
+        }
+        else
+        {
+            EventManager.instance.onPlayerCollisionBall.Invoke(false, null);
         }
 
 
