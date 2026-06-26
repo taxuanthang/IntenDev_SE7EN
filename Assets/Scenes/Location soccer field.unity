@@ -620,6 +620,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1710691257}
     m_Modifications:
+    - target: {fileID: -6057140222963153312, guid: 82a2914d8f86c62488456950c8330e38, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 535d24752e3d6444da644e79e90ec2ca, type: 2}
     - target: {fileID: -4216859302048453862, guid: 82a2914d8f86c62488456950c8330e38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -687,6 +691,7 @@ GameObject:
   - component: {fileID: 1710691259}
   - component: {fileID: 1710691262}
   - component: {fileID: 1710691263}
+  - component: {fileID: 1710691264}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -790,6 +795,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.58, y: 1.4943029, z: 0.54}
   m_Center: {x: 0, y: 0.7278486, z: 0}
+--- !u!114 &1710691264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710691256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d600a46643636b843928bdf7cb346537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1713309965
 PrefabInstance:
   m_ObjectHideFlags: 0

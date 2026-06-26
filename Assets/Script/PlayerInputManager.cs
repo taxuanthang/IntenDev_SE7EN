@@ -78,6 +78,8 @@ public class PlayerInputManager : MonoBehaviour
         player.playerLocomotionManager.HandleMoveInput(horizontal_Input, vertical_Input);
 
         player.playerLocomotionManager.HandleRotation(horizontal_Input, vertical_Input);
+
+        player.playerAnimationManager.UpdateAnimatorValues(moveAmount);
     }
 
 
