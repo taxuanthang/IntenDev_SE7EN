@@ -1745,7 +1745,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 751639510}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9db4e41810985b4abe8c9c700b18fc1, type: 3}
+  m_Script: {fileID: 11500000, guid: f8ea01d8ebde7254dbe500b49d7dbd7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &775648391
@@ -3693,6 +3693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button_Kick: {fileID: 1486869615}
   button_AutoKick: {fileID: 1623929199}
+  button_Reset: {fileID: 107150940}
 --- !u!1 &1647060128 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4750284359945493098, guid: f3059fe87515fa740afe2ac7e9819671, type: 3}
@@ -4311,6 +4312,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onClicked_ButtonAutoKick:
+    m_PersistentCalls:
+      m_Calls: []
+  onClikced_ButtonReset:
     m_PersistentCalls:
       m_Calls: []
   onBallHitGoal:

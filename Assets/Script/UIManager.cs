@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [Header("Button")]
     public Button button_Kick;
     public Button button_AutoKick;
+    public Button button_Reset;
 
     public void Awake()
     {
@@ -29,6 +30,7 @@ public class UIManager : MonoBehaviour
 
         button_Kick.onClick.AddListener(onClick_ButtonKick);
         button_AutoKick.onClick.AddListener(onClick_ButtonAutoKick);
+        button_Reset.onClick.AddListener(onClick_ButtonReset);
     }
 
     public void AssignListener()
@@ -49,6 +51,11 @@ public class UIManager : MonoBehaviour
     public void onClick_ButtonAutoKick()
     {
         EventManager.instance.onClicked_ButtonAutoKick.Invoke();
+    }
+
+    public void onClick_ButtonReset()
+    {
+        EventManager.instance.onClikced_ButtonReset.Invoke();
     }
 
 }
