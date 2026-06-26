@@ -43,8 +43,8 @@ public class PlayerLocomotionManager : MonoBehaviour
     public void HandleRotation(float directionX, float directionY)
     {
         Vector3 targetDirection = Vector3.zero;
-        targetDirection = Vector3.forward * directionY;
-        targetDirection = targetDirection + Vector3.right * directionX;
+        targetDirection = PlayerCamera.instance.playerFollowCamera.transform.up * directionY;
+        targetDirection = targetDirection + PlayerCamera.instance.playerFollowCamera.transform.right * directionX;
         targetDirection.y = 0;
         targetDirection.Normalize();
         if(targetDirection == Vector3.zero)
