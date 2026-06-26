@@ -50,7 +50,10 @@ public class UIManager : MonoBehaviour
 
     public void onClick_ButtonAutoKick()
     {
-        EventManager.instance.onClicked_ButtonAutoKick.Invoke();
+        if (!FieldManager.instance.isBallFlying)
+        {
+            EventManager.instance.onClicked_ButtonAutoKick.Invoke();
+        }
     }
 
     public void onClick_ButtonReset()

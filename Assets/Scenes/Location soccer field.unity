@@ -178,6 +178,7 @@ MonoBehaviour:
   ballPlayerTouching: {fileID: 0}
   ballPlayerJustShoot: {fileID: 0}
   player: {fileID: 1710691258}
+  isBallFlying: 0
   deltaGoalHeight: {x: 0, y: 1, z: 0}
   randomRange: {x: 4.6, y: 5}
 --- !u!1 &38242759

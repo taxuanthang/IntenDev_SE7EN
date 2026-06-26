@@ -14,12 +14,26 @@ public class FieldManager : MonoBehaviour
 
     public PlayerManager player;
 
+    [Header("Flags")]
+    public bool isBallFlying = false;
+
     [Header("Settings")]
     public Vector3 deltaGoalHeight = new Vector3(0,1f,0f);
     public Vector2 randomRange = new Vector2(4.6f, 5f);
 
+    public static FieldManager instance;
+
     public void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         AssignListener();
     }
 
@@ -57,6 +71,7 @@ public class FieldManager : MonoBehaviour
 
     public void ShootBallToTheNearestGoal(Ball ball)
     {
+        isBallFlying = true;
         PlayerCamera.instance.SetBallFollowed(ball.transform);
 
         GameObject nearestGoalDueToBall = GetNearestGoalFrameDueToBall(ball);
@@ -85,10 +100,14 @@ public class FieldManager : MonoBehaviour
     private async void OnBallCompletePath()
     {
         Vector3 hitPosition = ballPlayerJustShoot.transform.position;
+
         ballsOnField.Remove(ballPlayerJustShoot);
         Destroy(ballPlayerJustShoot.gameObject);
 
         EventManager.instance.onBallHitGoal.Invoke(hitPosition);
+
+        await Task.Delay(2000);
+        isBallFlying = false;
     }
 
     public GameObject GetNearestGoalFrameDueToBall(Ball kickedBall)
