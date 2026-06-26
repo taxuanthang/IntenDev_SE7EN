@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class FieldManager : MonoBehaviour
 {
-    public Ball[] ballsOnField;
+    public List<Ball> ballsOnField;
     public GameObject[] goalFrameOnField;
 
     public Ball ballPlayerTouching;
     public Ball ballPlayerJustShoot;
 
+    public PlayerManager player;
 
     public void Awake()
     {
@@ -21,28 +22,53 @@ public class FieldManager : MonoBehaviour
     public void AssignListener()
     {
         EventManager.instance.onCollision_PlayerAndBall.AddListener(UpdateBallTouching);
-        EventManager.instance.onClicked_ButtonKick.AddListener(ShootBallToTheNearestGoal);
-    }    
+        EventManager.instance.onClicked_ButtonKick.AddListener(ShootBallPlayerTouching);
+        EventManager.instance.onClicked_ButtonAutoKick.AddListener(ShootFarthestBallToTheNearestGoal);
+    }
 
-    public void ShootBallToTheNearestGoal()
+    public void ShootBallPlayerTouching()
     {
-        GameObject nearestGoalDueToBall = GetNearestGoalFrameDueToBall(ballPlayerTouching);
+        ShootBallToTheNearestGoal(ballPlayerTouching);
+    }
 
-        ballPlayerJustShoot = ballPlayerTouching;
+    public void ShootFarthestBallToTheNearestGoal()
+    {
+        Ball farthestBall = null;
+        float farthestDistance = 0f;
+
+        foreach (Ball ball in ballsOnField)
+        {
+            float distanceMeasure = Vector3.Distance(ball.transform.position, player.transform.position);
+            if (farthestDistance < distanceMeasure)
+            {
+                farthestDistance = distanceMeasure;
+                farthestBall = ball;
+            }
+        }
+
+        ShootBallToTheNearestGoal(farthestBall);
+
+    }
+
+    public void ShootBallToTheNearestGoal(Ball ball)
+    {
+        GameObject nearestGoalDueToBall = GetNearestGoalFrameDueToBall(ball);
+
+        ballPlayerJustShoot = ball;
 
         // Calculate Path
-        Vector3 midPos = (ballPlayerTouching.transform.position + nearestGoalDueToBall.transform.position) / 2;
+        Vector3 midPos = (ball.transform.position + nearestGoalDueToBall.transform.position) / 2;
         midPos = midPos / 1.1f;
         midPos.y = Random.RandomRange(4.6f, 5f);
         Vector3[] path =
             {
-                ballPlayerTouching.transform.position,
+                ball.transform.position,
                 midPos,
                 nearestGoalDueToBall.transform.position
             };
 
         // ShootBall
-        ballPlayerTouching.transform.DOPath(
+        ball.transform.DOPath(
         path,
         1.5f,
         PathType.CatmullRom
@@ -51,7 +77,8 @@ public class FieldManager : MonoBehaviour
 
     private void OnBallCompletePath()
     {
-        //Destroy(ballPlayerJustShoot.gameObject);
+        ballsOnField.Remove(ballPlayerJustShoot);
+        Destroy(ballPlayerJustShoot.gameObject);
     }
 
     public GameObject GetNearestGoalFrameDueToBall(Ball kickedBall)

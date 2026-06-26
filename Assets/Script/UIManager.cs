@@ -9,7 +9,8 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     [Header("Button")]
-    public Button buttonKick;
+    public Button button_Kick;
+    public Button button_AutoKick;
 
     public void Awake()
     {
@@ -24,9 +25,10 @@ public class UIManager : MonoBehaviour
 
         AssignListener();
 
-        buttonKick.gameObject.SetActive(false);
+        button_Kick.gameObject.SetActive(false);
 
-        buttonKick.onClick.AddListener(onClick_ButtonKick);
+        button_Kick.onClick.AddListener(onClick_ButtonKick);
+        button_AutoKick.onClick.AddListener(onClick_ButtonAutoKick);
     }
 
     public void AssignListener()
@@ -36,12 +38,17 @@ public class UIManager : MonoBehaviour
 
     public void DisplayButtonKick(bool isActive, Ball hitBall)
     {
-        buttonKick.gameObject.SetActive(isActive);
+        button_Kick.gameObject.SetActive(isActive);
     }
 
     public void onClick_ButtonKick()
     {
         EventManager.instance.onClicked_ButtonKick.Invoke();
+    }
+
+    public void onClick_ButtonAutoKick()
+    {
+        EventManager.instance.onClicked_ButtonAutoKick.Invoke();
     }
 
 }
